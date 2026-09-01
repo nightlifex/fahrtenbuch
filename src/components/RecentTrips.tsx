@@ -43,3 +43,4 @@ export function RecentTrips({ trips, onEdit, onDelete, onLoadSamples }: RecentTr
     </section>
   );
 }
+

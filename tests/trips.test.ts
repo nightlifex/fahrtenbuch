@@ -1,4 +1,6 @@
 import { describe, expect, it } from "vitest";
+import "fake-indexeddb/auto";
+import { getAllTrips, mergeTrips, putTrip, removeTrip, replaceAllTrips } from "../src/storage/tripDatabase";
 import type { AppSettings, Trip } from "../src/types";
 import { calculateStats, calculateTotalCostCents, createBackup, parseBackup } from "../src/utils/trips";
 
@@ -23,3 +25,26 @@ describe("Statistik und Backup", () => {
   });
   it("weist ungültige Importdaten ab", () => expect(() => parseBackup({ version: 1, trips: "ungültig" })).toThrow());
 });
+
+describe("Lokale Fahrtenverwaltung", () => {
+  it("erstellt, aktualisiert und löscht eine Fahrt in IndexedDB", async () => {
+    await replaceAllTrips([]);
+    await putTrip(passengerTrip);
+    expect(await getAllTrips()).toEqual([passengerTrip]);
+
+    const updatedTrip = { ...passengerTrip, destination: "C", updatedAt: "2026-08-19T13:00:00.000Z" };
+    await putTrip(updatedTrip);
+    expect(await getAllTrips()).toEqual([updatedTrip]);
+
+    await removeTrip(updatedTrip.id);
+    expect(await getAllTrips()).toEqual([]);
+  });
+
+  it("führt importierte Fahrten zusammen und erkennt Duplikate", async () => {
+    await replaceAllTrips([passengerTrip]);
+    const result = await mergeTrips([passengerTrip], [passengerTrip, driverTrip]);
+    expect(result).toMatchObject({ imported: 1, duplicates: 1 });
+    expect(await getAllTrips()).toHaveLength(2);
+  });
+});
+

@@ -4,10 +4,10 @@ import { formatCurrency } from "../utils/trips";
 
 export function StatsCards({ stats }: { stats: TripStats }) {
   const cards = [
-    { label: "Fahrten gesamt", value: String(stats.total), detail: "Alle Zeit", icon: CarFront, tone: "blue" },
+    { label: "Fahrten gesamt", value: String(stats.total), detail: "Gesamt", icon: CarFront, tone: "blue" },
     { label: "Alleinfahrten", value: String(stats.drivers), detail: `${stats.driverPercent} %`, icon: CarFront, tone: "green" },
     { label: "Beifahrer-Fahrten", value: String(stats.passengers), detail: `${stats.passengerPercent} %`, icon: UsersRound, tone: "purple" },
-    { label: "Mitfahrkosten gesamt", value: formatCurrency(stats.totalCostCents), detail: "Alle Zeit", icon: WalletCards, tone: "orange" },
+    { label: "Mitfahrkosten", value: formatCurrency(stats.totalCostCents), detail: "Gesamt", icon: WalletCards, tone: "orange" },
   ];
   return (
     <section className="stats-grid" aria-label="Statistikübersicht">
@@ -20,3 +20,4 @@ export function StatsCards({ stats }: { stats: TripStats }) {
     </section>
   );
 }
+

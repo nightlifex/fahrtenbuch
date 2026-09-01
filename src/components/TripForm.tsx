@@ -85,7 +85,7 @@ export function TripForm({ settings, editingTrip, onSave, onCancelEdit, onSucces
   return (
     <section className="trip-entry-card" id="trip-form">
       <form className="trip-form" onSubmit={submit} noValidate>
-        <div className="section-heading"><span className="heading-icon"><CarFront /></span><span><h1>{editingTrip ? "Fahrt bearbeiten" : "Fahrt eintragen"}</h1><p>Erfasse deine Fahrt schnell und einfach.</p></span></div>
+        <div className="section-heading"><span className="heading-icon"><CarFront /></span><h2>{editingTrip ? "Fahrt bearbeiten" : "Fahrt eintragen"}</h2></div>
         <div className="form-grid top-fields">
           <label className="field"><span>Datum</span><span className="input-with-icon"><CalendarDays /><input type="date" value={date} onChange={(event) => setDate(event.target.value)} aria-invalid={Boolean(errors.date)} /></span>{errors.date && <small className="field-error">{errors.date}</small>}</label>
           <fieldset className="field role-field"><legend>Rolle <span title="Legt fest, ob Mitfahrkosten entstehen."><CircleHelp /></span></legend><div className="segmented">
@@ -108,7 +108,6 @@ export function TripForm({ settings, editingTrip, onSave, onCancelEdit, onSucces
       <aside className={`cost-panel ${role === "driver" ? "cost-panel-disabled" : ""}`} aria-live="polite">
         <div className="cost-panel-heading"><h2>Kosten <span>(Fahrgemeinschaft)</span></h2><span title="Mitfahrkosten werden nur für Beifahrer-Fahrten berechnet."><Info /></span></div>
         <div className="cost-banner">{role === "passenger" ? <><UsersRound /><span>Als Beifahrer beteiligst du dich an den Fahrtkosten. Jede Strecke kostet einen Betrag.</span></> : <><CarFront /><span>Bei einer Alleinfahrt entstehen keine Mitfahrkosten.</span></>}</div>
-        <div className="route-illustration" aria-hidden="true"><span className="city city-one" /><span className="city city-two" /><span className="route-line" /><span className="route-start" /><span className="route-end"><MapPin /></span><span className="route-car"><CarFront /></span></div>
         <label className="cost-row"><span><strong>Preis pro Strecke</strong><small>z. B. anteilige Spritkosten</small></span><span className="money-input"><input value={price} onChange={(event) => setPrice(event.target.value)} inputMode="decimal" disabled={role === "driver"} aria-invalid={Boolean(errors.price)} /><b>€</b></span></label>
         {errors.price && <small className="field-error cost-error">{errors.price}</small>}
         <div className="cost-row"><span><strong>Anzahl Strecken</strong><small>{legs === 2 ? "Hin- und Rückfahrt" : outbound ? "Hinfahrt" : returnTrip ? "Rückfahrt" : "Keine Richtung"}</small></span><output>{legs}</output></div>
@@ -118,3 +117,4 @@ export function TripForm({ settings, editingTrip, onSave, onCancelEdit, onSucces
     </section>
   );
 }
+

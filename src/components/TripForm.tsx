@@ -85,7 +85,7 @@ export function TripForm({ settings, editingTrip, onSave, onCancelEdit, onSucces
   return (
     <section className="trip-entry-card" id="trip-form">
       <form className="trip-form" onSubmit={submit} noValidate>
-        <div className="section-heading"><h2>{editingTrip ? "Fahrt bearbeiten" : "Fahrt eintragen"}</h2></div>
+        <div className="section-heading"><span className="heading-icon"><CarFront /></span><h2>{editingTrip ? "Fahrt bearbeiten" : "Fahrt eintragen"}</h2></div>
         <div className="form-grid top-fields">
           <label className="field"><span>Datum</span><span className="input-with-icon"><CalendarDays /><input type="date" value={date} onChange={(event) => setDate(event.target.value)} aria-invalid={Boolean(errors.date)} /></span>{errors.date && <small className="field-error">{errors.date}</small>}</label>
           <fieldset className="field role-field"><legend>Rolle <span title="Legt fest, ob Mitfahrkosten entstehen."><CircleHelp /></span></legend><div className="segmented">

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import {
   BarChart3, Bell, CalendarDays, CarFront, ChevronDown, CircleHelp, FileBarChart,
-  Home, Menu, Route, Settings, WalletCards, X, Upload, ListChecks,
+  Home, Menu, Route, Settings, WalletCards, X, Upload,
 } from "lucide-react";
 
 export type ViewId = "overview" | "trips" | "statistics" | "costs" | "calendar" | "routes" | "reports" | "settings";
@@ -44,7 +44,7 @@ export function Layout({ children, activeView, onNavigate, userName, mobileMenuO
       <aside className={`sidebar ${mobileMenuOpen ? "sidebar-open" : ""}`}>
         <div className="brand-row">
           <span className="brand-mark"><CarFront /></span>
-          <span><strong>Fahrtenbuch</strong><small>Digital &amp; Einfach</small></span>
+          <span><strong>Fahrtenbuch</strong></span>
           <button className="icon-button drawer-close" onClick={() => setMobileMenuOpen(false)} aria-label="Menü schließen"><X /></button>
         </div>
         <nav aria-label="Hauptnavigation">
@@ -58,7 +58,6 @@ export function Layout({ children, activeView, onNavigate, userName, mobileMenuO
             </div>
           ))}
         </nav>
-        <div className="privacy-card"><span><ListChecks /></span><strong>100 % lokal</strong><p>Deine Fahrten bleiben ausschließlich in diesem Browser.</p><button onClick={() => navigate("settings")}>Backup erstellen</button></div>
       </aside>
       <div className="app-workspace">
         <header className="topbar">
@@ -76,3 +75,4 @@ export function Layout({ children, activeView, onNavigate, userName, mobileMenuO
     </div>
   );
 }
+

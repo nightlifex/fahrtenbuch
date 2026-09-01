@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { AlertTriangle, Database, Download, FileJson, FileSpreadsheet, HardDrive, Info, Save, ShieldCheck, Trash2, Upload } from "lucide-react";
+import { AlertTriangle, Download, FileSpreadsheet, Save, ShieldCheck, Trash2, Upload } from "lucide-react";
 import type { AppSettings, FahrtenbuchBackup, Trip } from "../types";
 import { calculateStats, createBackup, estimateBytes, formatCurrency, formatDateTime, parseBackup, tripsToCsv } from "../utils/trips";
 import { Dialog } from "./Dialog";
@@ -67,9 +67,9 @@ export function SettingsPanel({ settings, trips, onUpdateSettings, onImportRepla
 
   return (
     <div className="settings-page">
-      <div className="page-intro"><span><p>Persönlich & lokal</p><h1>Einstellungen</h1></span><span className="local-pill"><ShieldCheck />Keine Cloud-Synchronisierung</span></div>
+      <div className="page-intro"><h1>Einstellungen</h1></div>
       <section className="settings-card">
-        <div className="settings-heading"><span className="settings-icon"><Save /></span><span><h2>Allgemeine Einstellungen</h2><p>Diese Einstellungen werden zusammen mit deinem Backup gesichert.</p></span></div>
+        <div className="settings-heading"><span><h2>Allgemeine Einstellungen</h2><p>Diese Einstellungen werden zusammen mit dem Backup gesichert.</p></span></div>
         <form className="settings-form" onSubmit={savePreferences}>
           <label className="field"><span>Nutzername</span><input value={userName} onChange={(event) => setUserName(event.target.value)} /></label>
           <label className="field"><span>Standardpreis pro Strecke</span><span className="money-input wide"><input value={defaultPrice} onChange={(event) => setDefaultPrice(event.target.value)} inputMode="decimal" /><b>€</b></span></label>
@@ -78,13 +78,13 @@ export function SettingsPanel({ settings, trips, onUpdateSettings, onImportRepla
         </form>
       </section>
       <section className="settings-card backup-card" id="daten-backup">
-        <div className="settings-heading"><span className="settings-icon blue"><Database /></span><span><h2>Daten &amp; Backup</h2><p>Sicherung, Wiederherstellung und Tabellenexport.</p></span></div>
+        <div className="settings-heading"><span><h2>Daten &amp; Backup</h2><p>Sicherung, Wiederherstellung und Tabellenexport.</p></span></div>
         <div className="privacy-notice"><ShieldCheck /><p><strong>Deine Daten bleiben bei dir.</strong> Deine Fahrten und Einstellungen werden ausschließlich lokal in diesem Browser gespeichert. Sie werden nicht an GitHub oder andere Server übertragen. Erstelle regelmäßig eine Sicherung, damit deine Daten bei einem Browserwechsel oder beim Löschen der Websitedaten nicht verloren gehen.</p></div>
-        <div className="storage-stats"><span><HardDrive /><small>Gespeicherte Fahrten</small><strong>{trips.length}</strong></span><span><Database /><small>Lokale Datengröße</small><strong>ca. {Math.max(1, Math.ceil(size / 1024))} KB</strong></span><span><Info /><small>Letzte Änderung</small><strong>{formatDateTime(lastChanged)}</strong></span><span><FileJson /><small>Letztes Backup</small><strong>{formatDateTime(settings.lastBackupAt)}</strong></span></div>
+        <div className="storage-stats"><span><small>Gespeicherte Fahrten</small><strong>{trips.length}</strong></span><span><small>Lokale Datengröße</small><strong>ca. {Math.max(1, Math.ceil(size / 1024))} KB</strong></span><span><small>Letzte Änderung</small><strong>{formatDateTime(lastChanged)}</strong></span><span><small>Letztes Backup</small><strong>{formatDateTime(settings.lastBackupAt)}</strong></span></div>
         <div className="backup-actions">
-          <article><span className="action-icon blue"><Download /></span><div><h3>Vollständiges JSON-Backup</h3><p>Alle Fahrten und Einstellungen sichern und später wiederherstellen.</p><button className="button primary" onClick={exportBackup}><Download />Backup herunterladen</button></div></article>
-          <article><span className="action-icon purple"><Upload /></span><div><h3>Backup importieren</h3><p>Die Datei wird ausschließlich lokal in deinem Browser gelesen.</p><input ref={fileInput} type="file" accept="application/json,.json" hidden onChange={chooseFile} /><button className="button secondary" onClick={() => fileInput.current?.click()}><Upload />Backup auswählen</button>{importError && <p className="import-error"><AlertTriangle />{importError}</p>}</div></article>
-          <article><span className="action-icon green"><FileSpreadsheet /></span><div><h3>Fahrten als CSV</h3><p>Für Excel, LibreOffice, Numbers und andere Tabellenprogramme.</p><button className="button secondary" onClick={exportCsv} disabled={!trips.length}><FileSpreadsheet />CSV exportieren</button></div></article>
+          <article><div><h3>JSON-Backup</h3><p>Alle Fahrten und Einstellungen sichern und später wiederherstellen.</p><button className="button primary" onClick={exportBackup}><Download />Backup herunterladen</button></div></article>
+          <article><div><h3>Backup importieren</h3><p>Die Datei wird ausschließlich lokal in deinem Browser gelesen.</p><input ref={fileInput} type="file" accept="application/json,.json" hidden onChange={chooseFile} /><button className="button secondary" onClick={() => fileInput.current?.click()}><Upload />Backup auswählen</button>{importError && <p className="import-error"><AlertTriangle />{importError}</p>}</div></article>
+          <article><div><h3>CSV-Export</h3><p>Für Excel, LibreOffice, Numbers und andere Tabellenprogramme.</p><button className="button secondary" onClick={exportCsv} disabled={!trips.length}><FileSpreadsheet />CSV exportieren</button></div></article>
         </div>
         <div className="danger-zone"><span><Trash2 /><span><strong>Alle lokalen Daten löschen</strong><small>Diese Aktion kann nur mit einem vorhandenen Backup rückgängig gemacht werden.</small></span></span><button className="button danger-outline" onClick={() => setDeleteDialog(true)}><Trash2 />Alle Daten löschen</button></div>
       </section>
@@ -93,3 +93,4 @@ export function SettingsPanel({ settings, trips, onUpdateSettings, onImportRepla
     </div>
   );
 }
+

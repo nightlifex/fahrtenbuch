@@ -1,4 +1,4 @@
-import { CarFront, CheckCircle2, ChevronDown, Pencil, Trash2 } from "lucide-react";
+import { CalendarDays, CarFront, CheckCircle2, ChevronDown, List, Pencil, Trash2, UsersRound } from "lucide-react";
 import { useState } from "react";
 import type { Trip } from "../types";
 import { directionLabel, formatCurrency, formatDate, legCount } from "../utils/trips";
@@ -15,7 +15,7 @@ export function RecentTrips({ trips, onEdit, onDelete, onLoadSamples }: RecentTr
   const visible = showAll ? trips : trips.slice(0, 10);
   return (
     <section className="recent-trips-card">
-      <div className="card-heading"><h2>Letzte Einträge</h2><span>{trips.length} {trips.length === 1 ? "Fahrt" : "Fahrten"}</span></div>
+      <div className="card-heading"><h2><List />Letzte Einträge</h2><span>{trips.length} {trips.length === 1 ? "Fahrt" : "Fahrten"}</span></div>
       {trips.length === 0 ? (
         <div className="empty-trips"><span><CarFront /></span><h3>Noch keine Fahrt gespeichert</h3><p>Trage deine erste Fahrt ein oder starte mit vollständig fiktiven Beispieldaten.</p>{onLoadSamples && <button className="button secondary" onClick={onLoadSamples}>Beispieldaten laden</button>}</div>
       ) : (
@@ -25,8 +25,8 @@ export function RecentTrips({ trips, onEdit, onDelete, onLoadSamples }: RecentTr
               <thead><tr><th>Datum</th><th>Rolle</th><th>Strecke</th><th>Strecke(n)</th><th>Kosten</th><th>Notiz</th><th>Aktionen</th></tr></thead>
               <tbody>{visible.map((trip) => (
                 <tr key={trip.id}>
-                  <td><span className="date-cell">{formatDate(trip.date)}</span></td>
-                  <td><span className={`role-badge ${trip.role}`} >{trip.role === "driver" ? "Allein gefahren" : "Als Beifahrer"}</span></td>
+                  <td><span className="date-cell"><CalendarDays />{formatDate(trip.date)}</span></td>
+                  <td><span className={`role-badge ${trip.role}`} >{trip.role === "driver" ? <CarFront /> : <UsersRound />}{trip.role === "driver" ? "Allein gefahren" : "Als Beifahrer"}</span></td>
                   <td><strong className="route-cell">{trip.startLocation}<span>→</span>{trip.destination}</strong></td>
                   <td>{directionLabel(trip)}</td>
                   <td>{trip.role === "driver" ? <span>–</span> : <span className="cost-cell">{legCount(trip) > 1 && `${legCount(trip)} × ${formatCurrency(trip.pricePerLegCents)} = `}<strong>{formatCurrency(trip.totalCostCents)}</strong></span>}</td>

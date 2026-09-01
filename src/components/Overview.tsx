@@ -1,4 +1,3 @@
-import { ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import type { AppSettings, Trip, TripStats } from "../types";
 import { Dialog } from "./Dialog";
@@ -25,7 +24,7 @@ export function Overview({ trips, stats, settings, onSave, onDelete, onLoadSampl
   }
   return (
     <>
-      <div className="page-intro"><span><p>Dein persönliches Fahrtenbuch</p><h1>Übersicht</h1></span><span className="local-pill"><ShieldCheck />Daten bleiben lokal</span></div>
+      <div className="page-intro"><h1>Übersicht</h1></div>
       <StatsCards stats={stats} />
       <TripForm settings={settings} editingTrip={editingTrip} onSave={onSave} onCancelEdit={() => setEditingTrip(undefined)} onSuccess={onToast} />
       <RecentTrips trips={trips} onEdit={setEditingTrip} onDelete={setDeleteTarget} onLoadSamples={async () => { await onLoadSamples(); onToast("Fiktive Beispieldaten wurden geladen."); }} />
@@ -33,3 +32,4 @@ export function Overview({ trips, stats, settings, onSave, onDelete, onLoadSampl
     </>
   );
 }
+
